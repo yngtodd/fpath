@@ -10,14 +10,13 @@ namespace fpath {
 namespace data {
 namespace datasets {
 
+std::tuple<torch::Tensor, torch::Tensor> read_data(const std::str root);
+
 /// Epath dataset
 ///
 class Epath : public torch::data::Dataset<Epath>
     public:
-        /// The mode in which the dataset is loaded.
-        enum class Mode { kTrain, kTest };
-
-        explicit Epath(Mode mode = Mode::kTrain);
+        Epath(const std::str& root) : Epath{read_data(root)}
 
         /// Returns the `Example` at the given `index`.
         torch::data::Example<> get(size_t index) override;
@@ -35,7 +34,9 @@ class Epath : public torch::data::Dataset<Epath>
         const torch::Tensor& targets() const;
 
     private:
-        torch::Tensor text_, targets_;
+	Epath(std::tuple<torch::Tensor, torch::Tensor> t)
+            : text_{std::get<0>(t)},
+	      targets_{std::get<1>(t)};
 };
 } // namespace datasets
 } // namespace data
