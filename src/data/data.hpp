@@ -9,14 +9,17 @@
 namespace fpath {
 namespace data {
 namespace datasets {
+namespace {
 
-std::tuple<torch::Tensor, torch::Tensor> read_data(const std::str root);
+/// Read in the Epath csv
+std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str root);
+} // namespace
 
 /// Epath dataset
 ///
 class Epath : public torch::data::Dataset<Epath>
     public:
-        Epath(const std::str& root) : Epath{read_data(root)}
+        Epath(const std::str& root) : Epath{read_csv(root)}
 
         /// Returns the `Example` at the given `index`.
         torch::data::Example<> get(size_t index) override;

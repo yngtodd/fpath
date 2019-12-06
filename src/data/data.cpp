@@ -8,11 +8,17 @@ namespace {
 
 constexpr uint32_t kTrainSize = 60000;
 
+/// Read in the Epath csv
+std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str root) {
+    // TODO(Todd): read in the csv
+    return 0
+}
+
 } // namespace
 
-Epath::Epath(Mode mode)
-    : text_(load_text()),
-      targets_(load_targets()) {};
+/// Constructor
+Epath::Epath(const std::str& root)
+    : Epath{read_csv(root)}
 
 /// Get a batch of data at an index
 torch::data::Example<> Epath::get(size_t index) {
