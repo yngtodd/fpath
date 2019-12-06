@@ -18,7 +18,7 @@ std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root) {
 
 /// Constructor
 Epath::Epath(const std::str& root)
-    : Epath{read_csv(root)}
+    : Epath{read_csv(root)} {}
 
 /// Get a batch of data at an index
 torch::data::Example<> Epath::get(size_t index) {
