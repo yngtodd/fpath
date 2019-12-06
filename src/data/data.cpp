@@ -15,8 +15,8 @@ std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root) {
 }
 
 struct Epath::Data {
-    auto text = torch::empty({kTrainSize}, torch::kInt);
-    auto grade = torch::empty({kTrainSize}, torch::kInt);
+    torch::Tensor text = torch::empty({kTrainSize}, torch::kInt);
+    torch::Tensor grade = torch::empty({kTrainSize}, torch::kInt);
 }
 
 } // namespace
