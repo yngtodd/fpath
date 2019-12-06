@@ -10,15 +10,20 @@ constexpr uint32_t kTrainSize = 60000;
 
 /// Read in the Epath csv
 std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root) {
-    // TODO(Todd): read in the csv
+    // TODO(Todd): read in the csv and fill out the fields in Epath::Data
     return 0
+}
+
+struct Epath::Data {
+    auto text = torch::empty({kTrainSize}, torch::kInt);
+    auto grade = torch::empty({kTrainSize}, torch::kInt);
 }
 
 } // namespace
 
 /// Constructor
 Epath::Epath(const std::str& root)
-    : Epath{read_csv(root)} {}
+    : Data(read_csv(root)) {}
 
 /// Get a batch of data at an index
 torch::data::Example<> Epath::get(size_t index) {

@@ -37,9 +37,7 @@ class Epath : public torch::data::Dataset<Epath>
         const torch::Tensor& targets() const;
 
     private:
-	Epath(std::tuple<torch::Tensor, torch::Tensor> t)
-            : text_{std::get<0>(t)},
-	      targets_{std::get<1>(t)} {}
+        struct Data;
 };
 } // namespace datasets
 } // namespace data
