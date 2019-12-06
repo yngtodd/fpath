@@ -1,0 +1,57 @@
+# Ignore C++ build artifacts.
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Ignore Vagrant runtime files.
+
+.vagrant/
+
+# Ignore settings for various IDEs.
+
+.idea/
+.project/
+.vscode/
+nbproject/
+*.code-workspace
+
+# Ignore OS metadata files.
+
+.DS_Store
+Thumbs.db
+
+# Ignore build directory
+build/
+
+# Ignore vendor test
+#test/vendor/
