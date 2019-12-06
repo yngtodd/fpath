@@ -19,7 +19,7 @@ std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root);
 ///
 class Epath : public torch::data::Dataset<Epath>
     public:
-        Epath(const std::str& root) : Epath{read_csv(root)}
+        explicit Epath(const std::str& root) : Epath{read_csv(root)}
 
         /// Returns the `Example` at the given `index`.
         torch::data::Example<> get(size_t index) override;
@@ -27,7 +27,7 @@ class Epath : public torch::data::Dataset<Epath>
         /// Returns the size of the dataset.
         torch::optional<size_t> size() const override;
 
-        /// Returns true if this is the training subset of MNIST.
+        /// Returns true if this is the training set of the Epath reports
         bool is_train() const noexcept;
 
         /// Returns all images stacked into a single tensor.
@@ -39,7 +39,7 @@ class Epath : public torch::data::Dataset<Epath>
     private:
 	Epath(std::tuple<torch::Tensor, torch::Tensor> t)
             : text_{std::get<0>(t)},
-	      targets_{std::get<1>(t)};
+	      targets_{std::get<1>(t)}
 };
 } // namespace datasets
 } // namespace data
