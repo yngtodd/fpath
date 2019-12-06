@@ -13,17 +13,17 @@ Application
 -----------
 .. code-block:: console
 
-    $ mkdir build && cd build
-    $ cmake -DCMAKE_PREFIX_PATH=/absolute/path/to/libtorch ..
-    $ cmake --build .
+    mkdir build && cd build
+    cmake -DCMAKE_PREFIX_PATH=/absolute/path/to/libtorch ..
+    cmake --build .
     
 
 Documentation (Doxygen)
 -----------------------
 .. code-block:: console
 
-    $ cd doc/doxygen
-    $ doxygen Doxyfile
+    cd doc/doxygen
+    doxygen Doxyfile
  
     
 Documenation (Sphinx)
@@ -46,13 +46,13 @@ Application
 
 .. code-block:: console
 
-    $ cd build
-    $ ./fpath
+    cd build
+    ./fpath
 
 
 Test Suite
 ----------
 .. code-block:: console
 
-    $ cd build
-    $ test/fpath_test
+    cd build
+    test/fpath_test
