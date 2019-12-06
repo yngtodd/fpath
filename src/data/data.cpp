@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <torch/torch.h>
 #include "data.hpp"
 
@@ -7,14 +8,28 @@ namespace datasets {
 namespace {
 
 constexpr uint32_t kTrainSize = 60000;
+constexpr const char* kTrainFilename = "epath_train.csv";
+constexpr const char* kTestFilename = "epath_test.csv";
 
-/*
-/// Read in the Epath csv
-std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root) {
-    // TODO(Todd): read in the csv
-    return 0
+std::string join_paths(std::string head, const std::string& tail) {
+    if (head.back() != '/') {
+        head.push_back('/');
+    }
+    head += tail;
+    return head;
 }
-*/
+
+/// Read in the Epath csv
+std::tuple<torch::Tensor, torch::Tensor> load_text(const std::string& root, bool train) {
+    const auto num_samples = train ? kTrainSize : kTestSize;
+
+    const auto path =
+        join_paths(root, train ? kTrainFilename : kTestFilename); 
+
+    std::ifstream data(path);
+
+    // return
+}
 
 } // namespace
 
