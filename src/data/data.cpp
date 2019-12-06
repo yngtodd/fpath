@@ -8,21 +8,23 @@ namespace {
 
 constexpr uint32_t kTrainSize = 60000;
 
+/*
 /// Read in the Epath csv
 std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root) {
     // TODO(Todd): read in the csv and fill out the fields in Epath::Data
     return 0
 }
+*/
 
 struct Epath::Data {
-    torch::Tensor text = torch::empty({kTrainSize}, torch::kInt);
-    torch::Tensor grade = torch::empty({kTrainSize}, torch::kInt);
+    torch::Tensor text;
+    torch::Tensor grade;
 }
 
 } // namespace
 
 /// Constructor
-Epath::Epath(const std::str& root)
+Epath::Epath(const std::str& root, mode Mode)
     : Data(read_csv(root)) {}
 
 /// Get a batch of data at an index

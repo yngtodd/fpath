@@ -12,7 +12,7 @@ namespace datasets {
 namespace {
 
 /// Read in the Epath csv
-std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root);
+//std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root);
 } // namespace
 
 /// Epath dataset
