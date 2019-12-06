@@ -17,13 +17,13 @@ namespace {
 
 /// Epath dataset
 ///
-class Epath : public torch::data::Dataset<Epath>
+class Epath : public torch::data::Dataset<Epath> {
     public:
         /// The mode in which the dataset is loaded.
         enum class Mode { kTrain, kTest };
 
         // Constructor
-        explicit Epath(const std::str& root, mode = Mode::kTrain);
+        explicit Epath(const std::string& root, Mode mode = Mode::kTrain);
 
         /// Returns the `Example` at the given `index`.
         torch::data::Example<> get(size_t index) override;
@@ -40,7 +40,6 @@ class Epath : public torch::data::Dataset<Epath>
         /// Returns all targets stacked into a single tensor.
         const torch::Tensor& targets() const;
 
-    private:
         struct Data;
 };
 } // namespace datasets
