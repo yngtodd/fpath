@@ -19,7 +19,11 @@ std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root);
 ///
 class Epath : public torch::data::Dataset<Epath>
     public:
-        explicit Epath(const std::str& root) : Epath{read_csv(root)} {}
+        /// The mode in which the dataset is loaded.
+        enum class Mode { kTrain, kTest };
+
+        // Constructor
+        explicit Epath(const std::str& root, mode = Mode::kTrain);
 
         /// Returns the `Example` at the given `index`.
         torch::data::Example<> get(size_t index) override;
