@@ -8,11 +8,13 @@ namespace {
 
 constexpr uint32_t kTrainSize = 60000;
 
+/*
 /// Read in the Epath csv
 std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root) {
     // TODO(Todd): read in the csv
     return 0
 }
+*/
 
 } // namespace
 

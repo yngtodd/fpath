@@ -57,7 +57,7 @@ target_link_libraries(${EXECUTABLE} cudnn ${TORCH_LIBRARIES})
 
 target_compile_features(${EXECUTABLE}
 PRIVATE
-    cxx_std_11
+    cxx_std_17
 )
 
 add_subdirectory(test)
