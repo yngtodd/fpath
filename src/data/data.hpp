@@ -9,15 +9,18 @@
 namespace fpath {
 namespace data {
 namespace datasets {
+namespace {
+
+/// Read in the Epath csv
+std::tuple<torch::Tensor, torch::Tensor> read_csv(const std::str& root);
+} // namespace
+
 
 /// Epath dataset
 ///
 class Epath : public torch::data::Dataset<Epath>
     public:
-        /// The mode in which the dataset is loaded.
-        enum class Mode { kTrain, kTest };
-
-        explicit Epath(Mode mode = Mode::kTrain);
+        explicit Epath(const std::str& root) : Epath{read_csv(root)} {}
 
         /// Returns the `Example` at the given `index`.
         torch::data::Example<> get(size_t index) override;
@@ -25,7 +28,7 @@ class Epath : public torch::data::Dataset<Epath>
         /// Returns the size of the dataset.
         torch::optional<size_t> size() const override;
 
-        /// Returns true if this is the training subset of MNIST.
+        /// Returns true if this is the training set of the Epath reports
         bool is_train() const noexcept;
 
         /// Returns all images stacked into a single tensor.
@@ -35,7 +38,9 @@ class Epath : public torch::data::Dataset<Epath>
         const torch::Tensor& targets() const;
 
     private:
-        torch::Tensor text_, targets_;
+	Epath(std::tuple<torch::Tensor, torch::Tensor> t)
+            : text_{std::get<0>(t)},
+	      targets_{std::get<1>(t)} {}
 };
 } // namespace datasets
 } // namespace data
