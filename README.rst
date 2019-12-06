@@ -44,15 +44,10 @@ Running
 Application
 -----------
 
-1. `kernel_size`: the size of the kernel filter (square)
-2. `num_epochs`: the number of epochs to pass over the data
-3. `batch_size`: minibatch size
-4. `data_path`: path to the MNIST data
-
 .. code-block:: console
 
     $ cd build
-    $ ./fpath --kernel_size <int> --num_epochs <int> --batch_size <int> --data_path <string>
+    $ ./fpath
 
 
 Test Suite
