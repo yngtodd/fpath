@@ -43,6 +43,35 @@ class Epath : public torch::data::Dataset<Epath>
     private:
         struct Data;
 };
+
+/// Random dataset.
+///
+class RandomDataset : public torch::data::Dataset<RandomDataset> {
+     public:
+          /// The mode in which the dataset is loaded.
+          enum class Mode { kTrain, kTest };
+
+          explicit RandomDataset(Mode mode = Mode::kTrain);
+
+	  /// Returns the `Example` at the given `index`.
+	  torch::data::Example<> get(size_t index) override;
+
+	  /// Returns the size of the dataset.
+	  torch::optional<size_t> size() const override;
+
+	  /// Returns true if this is the training subset of MNIST.
+          bool is_train() const noexcept;
+
+          /// Returns all images stacked into a single tensor.
+          const torch::Tensor& text() const;
+
+          /// Returns all targets stacked into a single tensor.
+          const torch::Tensor& labels() const;
+
+     private:
+	  torch::Tensor text_, labels_;
+};
+
 } // namespace datasets
 } // namespace data
 } // namespace fpath
