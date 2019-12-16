@@ -9,24 +9,24 @@
 #include "api/api.hpp"
 #include "data/data.hpp"
 
+using namespace std::chrono;
+
 int main(int argc, const char **argv) {
     argparse::ArgumentParser parser;
   
     parser.addArgument("-n", "--num_epochs", /*num_args=*/1, /*optional=*/false);
     parser.addArgument("-b", "--batch_size", /*num_args=*/1, /*optional=*/false);
-    parser.addArgument("-k", "--kernel_size", /*num_args=*/1, /*optional=*/false);
-    parser.addArgument("-i", "--img_size", /*num_args=*/1, /*optional=*/false);
+    parser.addArgument("-i", "--data_path", /*num_args=*/1, /*optional=*/false);
     parser.parse(argc, argv);
 
     int64_t num_epochs = parser.retrieve<int>("num_epochs");
     int64_t batch_size = parser.retrieve<int>("batch_size");
-    int64_t kernel_size = parser.retrieve<int>("kernel_size");
-    int64_t img_size = parser.retrieve<int>("img_size");
+    std::string data_path = parser.retrieve<std::string>("data_path");
 
     // Check if we can run on the GPU
     torch::Device device(torch::cuda::is_available() ? torch::kCUDA : torch::kCPU);
 
-    auto dataset = fpath::data:datasets::Epath()
+    auto dataset = fpath::data::datasets::Epath(data_path)
         .map(torch::data::transforms::Stack<>());
     
     const int64_t batches_per_epoch =
@@ -43,7 +43,6 @@ int main(int argc, const char **argv) {
         int64_t batch_index = 0;
 	for (torch::data::Example<>& batch: *data_loader) {
 	    torch::Tensor img = batch.data.to(device);
-            conv2d(img, kernel_size, batch_size);
 
 	    std::printf(
                 "\r[%2ld/%2ld][%3ld/%3ld]",
@@ -60,7 +59,6 @@ int main(int argc, const char **argv) {
 
     std::cout << "\nSummary" << std::endl;
     std::cout << "------" << std::endl;
-    std::cout << "kernel size: " << kernel_size << std::endl;
     std::cout << "batch size: " << batch_size << std::endl;
     std::cout << "Number of epochs: " << num_epochs << std::endl;
     std::cout << "Time taken: " << duration.count() << " microseconds" << std::endl;

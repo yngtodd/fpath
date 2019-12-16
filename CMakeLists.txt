@@ -45,6 +45,7 @@ target_sources(${EXECUTABLE}
 PRIVATE
     ${API_SOURCE_FILES}
     ${CORE_SOURCE_FILES}
+    ${DATA_SOURCE_FILES}
     ${CMAKE_SOURCE_DIR}/src/main.cpp
 )
 
@@ -57,7 +58,7 @@ target_link_libraries(${EXECUTABLE} cudnn ${TORCH_LIBRARIES})
 
 target_compile_features(${EXECUTABLE}
 PRIVATE
-    cxx_std_11
+    cxx_std_14
 )
 
 add_subdirectory(test)
