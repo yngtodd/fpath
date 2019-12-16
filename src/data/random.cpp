@@ -10,10 +10,10 @@ constexpr uint32_t kTrainSize = 10;
 constexpr uint32_t kWords = 1000;
 constexpr uint32_t kNumChannels = 1;
 
-// Create random images
+// Create random text
 torch::Tensor load_text() {
     auto tensor = torch::randint(
-        /*low=*/0, /*high=*/255, 
+        /*low=*/0, /*high=*/kWords,
         {kTrainSize, kWords, kNumChannels}
     ); 
     
