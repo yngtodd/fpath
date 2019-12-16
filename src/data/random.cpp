@@ -39,11 +39,11 @@ torch::data::Example<> RandomDataset::get(size_t index) {
 }
 
 torch::optional<size_t> RandomDataset::size() const {
-    return images_.size(0);
+    return text_.size(0);
 }
 
 bool RandomDataset::is_train() const noexcept {
-    return images_.size(0) == kTrainSize;
+    return text_.size(0) == kTrainSize;
 }
 
 const torch::Tensor& RandomDataset::text() const {
