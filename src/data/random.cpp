@@ -7,14 +7,14 @@ namespace datasets {
 namespace {
 
 constexpr uint32_t kTrainSize = 10;
-constexpr uint32_t kWords = 1000;
+constexpr uint32_t kNumWords = 1000;
 constexpr uint32_t kNumChannels = 1;
 
 // Create random text
 torch::Tensor load_text() {
     auto tensor = torch::randint(
-        /*low=*/0, /*high=*/kWords,
-        {kTrainSize, kWords, kNumChannels}
+        /*low=*/0, /*high=*/kNumWords,
+        {kTrainSize, kNumWords, kNumChannels}
     ); 
     
     std::cout << "Creating random text!" << std::endl;
