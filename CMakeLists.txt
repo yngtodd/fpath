@@ -29,13 +29,18 @@ set(CORE_SOURCE_FILES
 )
 
 set(DATA_SOURCE_FILES
-    ${CMAKE_SOURCE_DIR}/src/data/data.cpp
+    ${CMAKE_SOURCE_DIR}/src/data/random.cpp
+)
+
+set(MODEL_SOURCE_FILES
+    ${CMAKE_SOURCE_DIR}/src/models/yoonkim.cpp
 )
 
 set(APP_SOURCE_FILES
     ${API_SOURCE_FILES}
     ${CORE_SOURCE_FILES}
     ${DATA_SOURCE_FILES}
+    ${MODEL_SOURCE_FILES}
     ${CMAKE_SOURCE_DIR}/src/main.cpp
 )
 
@@ -46,6 +51,7 @@ PRIVATE
     ${API_SOURCE_FILES}
     ${CORE_SOURCE_FILES}
     ${DATA_SOURCE_FILES}
+    ${MODEL_SOURCE_FILES}
     ${CMAKE_SOURCE_DIR}/src/main.cpp
 )
 

@@ -8,6 +8,7 @@
 #include "core/argparse.hpp"
 #include "api/api.hpp"
 #include "data/data.hpp"
+#include "models/models.hpp"
 
 using namespace std::chrono;
 
@@ -16,7 +17,7 @@ int main(int argc, const char **argv) {
   
     parser.addArgument("-n", "--num_epochs", /*num_args=*/1, /*optional=*/false);
     parser.addArgument("-b", "--batch_size", /*num_args=*/1, /*optional=*/false);
-    parser.addArgument("-i", "--data_path", /*num_args=*/1, /*optional=*/false);
+    // parser.addArgument("-i", "--data_path", /*num_args=*/1, /*optional=*/false);
     parser.parse(argc, argv);
 
     int64_t num_epochs = parser.retrieve<int>("num_epochs");
@@ -26,7 +27,7 @@ int main(int argc, const char **argv) {
     // Check if we can run on the GPU
     torch::Device device(torch::cuda::is_available() ? torch::kCUDA : torch::kCPU);
 
-    auto dataset = fpath::data::datasets::Epath(data_path)
+    auto dataset = fpath::data::datasets::RandomDataset()
         .map(torch::data::transforms::Stack<>());
     
     const int64_t batches_per_epoch =
