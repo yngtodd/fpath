@@ -22,7 +22,7 @@ int main(int argc, const char **argv) {
 
     int64_t num_epochs = parser.retrieve<int>("num_epochs");
     int64_t batch_size = parser.retrieve<int>("batch_size");
-    std::string data_path = parser.retrieve<std::string>("data_path");
+    // std::string data_path = parser.retrieve<std::string>("data_path");
 
     // Check if we can run on the GPU
     torch::Device device(torch::cuda::is_available() ? torch::kCUDA : torch::kCPU);
