@@ -50,10 +50,12 @@ struct YoonKim : torch::nn::Module {
 	    nn::Linear(/*input_dim=*/num_filters * 3, /*output_dim=*/10)
 	);
 
-	// declare all layers
-	nn::Embedding{nullptr};
+	_nfilters = total_filters(num_filters);
+
+	// declare all the layers
+	nn::Embedding embed{nullptr};
 	nn::Conv1d conv1{nullptr}, conv2{nullptr}, conv3{nullptr};
-	nn::Linear{nullptr};
+	nn::Linear fc{nullptr};
     }
 
     torch::Tensor relu_pool(torch::Tensor x) {
@@ -61,12 +63,19 @@ struct YoonKim : torch::nn::Module {
 	 return torch::max_pool1d(x);
     }
 
+    int64_t total_filters(int64_t num_filters) {
+        return num_filters * 3;
+    } 
+
     torch::Tensor forward(const torch::Tensor& input) {
 	auto embedding = embed(input);
         auto x1 = relu_pool(conv1(embedding)); 
 	auto x2 = relu_pool(conv2(embedding));
 	auto x3 = relu_pool(conv3(embedding));
-	auto x = torch::cat({x1, x2, x3}, /*dim=*/0);
+	auto x = torch::cat({x1.view(-1, _nfilters), 
+	                     x2.view(-1, _nfilters), 
+	                     x3.view(-1, _nfilters)},
+	                    /*dim=*/1);
 	return fc(x);
     }
 
