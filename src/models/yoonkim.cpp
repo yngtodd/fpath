@@ -17,6 +17,8 @@ namespace models {
 struct YoonKim : torch::nn::Module {
 
     YoonKim(int64_t num_embeddings, int64_t embedding_dim, int64_t num_filters) {
+        _nfilters = total_filters(num_filters);
+
 	embed = register_module(
              "embed",
 	     nn::Embedding(nn::EmbeddingOptions(
@@ -47,10 +49,8 @@ struct YoonKim : torch::nn::Module {
 
 	fc = register_module(
 	    "fc",
-	    nn::Linear(/*input_dim=*/num_filters * 3, /*output_dim=*/10)
+	    nn::Linear(/*input_dim=*/_nfilters, /*output_dim=*/10)
 	);
-
-	_nfilters = total_filters(num_filters);
 
 	// declare all the layers
 	nn::Embedding embed{nullptr};
@@ -58,11 +58,19 @@ struct YoonKim : torch::nn::Module {
 	nn::Linear fc{nullptr};
     }
 
+    /**
+     * Relu followed by max pool
+     */
     torch::Tensor relu_pool(torch::Tensor x) {
          x = torch::relu(x);
 	 return torch::max_pool1d(x);
     }
 
+    /**
+     * Get the total number of filters for the model
+     *
+     * @pram num_filters: the number of filters per convolution layer
+     */
     int64_t total_filters(int64_t num_filters) {
         return num_filters * 3;
     } 
