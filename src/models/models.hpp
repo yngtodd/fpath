@@ -19,7 +19,7 @@ struct YoonKim: torch::nn::Module {
 
     // Total number of filters for the model
     int64_t total_filters(int64_t num_filters);
-}
+};
 
 } // models
 } // fpath

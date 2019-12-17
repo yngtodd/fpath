@@ -1,4 +1,5 @@
 #include <torch/torch.h>
+#include <torch/types.h>
 #include "data.hpp"
 
 namespace fpath {
@@ -18,7 +19,7 @@ torch::Tensor load_text() {
     ); 
     
     std::cout << "Creating random text!" << std::endl;
-    return tensor.to(kInt64);
+    return tensor.to(torch::kInt64);
 }
 
 // Create labels - all ones.

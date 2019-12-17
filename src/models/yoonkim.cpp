@@ -1,6 +1,6 @@
 // yoonkim.cpp
 #include <torch/torch.h>
-#include "models.hpp"
+//#include "models.hpp"
 
 using namespace torch;
 
@@ -87,5 +87,6 @@ struct YoonKim : torch::nn::Module {
 	return fc(x);
     }
 
+};
 } // models
 } // fpath

@@ -38,13 +38,26 @@ int main(int argc, const char **argv) {
         torch::data::DataLoaderOptions().batch_size(batch_size).workers(2)
     );
 
+    auto model = std::make_shared<fpath::models::YoonKim>(/*num_embeddings=*/1000,
+		                           /*embedding_dim=*/300,
+					   /*num_filters=*/50);
+
+    torch::optim::SGD optimizer(model->parameters(), /*lr=*/0.01);
+
     auto start = high_resolution_clock::now();
 
     for (int64_t epoch = 1; epoch <= num_epochs; ++epoch) {
         int64_t batch_index = 0;
-	for (torch::data::Example<>& batch: *data_loader) {
-	    torch::Tensor img = batch.data.to(device);
+	for (auto& batch: *data_loader) {
+	    torch::Tensor text = batch.data.to(device);
+	    torch::Tensor target = batch.target.to(device);
+            optimizer.zero_grad();
+	    torch::Tensor logits = model->forward(text);
+            torch::Tensor loss = torch::nll_loss(logits, target);
+	    loss.backward();
+	    optimizer.step();
 
+	    /*
 	    std::printf(
                 "\r[%2ld/%2ld][%3ld/%3ld]",
                 epoch,
@@ -52,6 +65,13 @@ int main(int argc, const char **argv) {
                 ++batch_index,
                 batches_per_epoch
 	    );
+	    */
+
+            if (++batch_index % 2 == 0) {
+                std::cout << "Epoch: " << epoch << " | Batch: " << batch_index 
+	                  << " | Loss: " << loss.item<float>() << std::endl;
+
+	        torch::save(model, "model_save.pt");
 	}
     }
 
