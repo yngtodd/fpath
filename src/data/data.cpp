@@ -1,5 +1,3 @@
-#include <vector>
-#include <tuple>
 #include <torch/torch.h>
 #include "data.hpp"
 
@@ -10,30 +8,40 @@ namespace {
 
 constexpr uint32_t kTrainSize = 60000;
 
+/// Read in the Epath csv
+Epath::Data read_csv(const std::string& root, Mode mode) {
+    // TODO(Todd): read in the csv and fill out the fields in Epath::Data
+    return 0;
+}
 } // namespace
 
-Epath::Epath(Mode mode)
-    : text_(load_text()),
-      targets_(load_labels()) {};
+Epath::Data {
+    torch::Tensor text;
+    torch::Tensor grade;
+}
 
+/// Constructor
+Epath::Epath(const std::string& root, Mode mode)
+    : Data(read_csv(root, mode)) {}
+
+/// Get a batch of data at an index
 torch::data::Example<> Epath::get(size_t index) {
-    return {text_[index], labels_[index]};
+    return {Data.text[index], Data.grade[index]};
 }
 
+/// Get the size of the dataset
 torch::optional<size_t> Epath::size() const {
-    return text_.size(0);
+    return Data.text.size(0);
 }
 
+/// Check whether this is the train set
 bool Epath::is_train() const noexcept {
-    return text_.size(0) == kTrainSize;
+    return Data.text.size(0) == kTrainSize;
 }
 
+/// Return all of the text data as a single Pytorch tensor
 const torch::Tensor& Epath::text() const {
-    return text_;
-}
-
-const torch::Tensor& Epath::targets() const {
-    return targets_;
+    return Data;
 }
 
 } // namespace datasets
